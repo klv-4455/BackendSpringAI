@@ -14,16 +14,18 @@ public class AnthropicController {
    // private AnthropicChatModel chatModel;
     private ChatClient chatClient;
 
-    public AntropicController (AnthropicController 
-
     public AnthropicController(AnthropicChatModel chatModel) {
-        this.chatModel = chatModel;
+        this.chatClient = ChatClient.create(chatModel);
     }
+//    public AnthropicController(AnthropicChatModel chatModel) {
+//        this.chatModel = chatModel;
+//    }
 
     @GetMapping("/{message}")
     public ResponseEntity<String> getAnswer(@PathVariable String message){
 
-        String response = chatModel.call(message);
+       // String response = chatModel.call(message);
+        String response = chatClient.prompt(message).call().content();
         return ResponseEntity.ok(response);
     }
 }
